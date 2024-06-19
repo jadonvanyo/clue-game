@@ -7,6 +7,9 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
+import useLocalStorage from "use-local-storage";
+import "./styles/App.css";
+import { Toggle } from "./components/Toggle";
 
 // Clear tokens from local storage and return user to the login page
 function Logout() {
@@ -22,23 +25,30 @@ function RegisterAndLogout() {
 
 // Specify routes to navigate between
 function App() {
+
+  const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [isDark, setIsDark] = useLocalStorage("isDark", preference);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/" 
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/register" element={<RegisterAndLogout />} />
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="App" data-theme={isDark ? "dark" : "light"}>
+      <BrowserRouter >
+      <Toggle isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
+        <Routes>
+          <Route
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<RegisterAndLogout />} />
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
