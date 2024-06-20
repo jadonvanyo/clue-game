@@ -2,10 +2,14 @@
     position: absolute;
     top: 2em;
     right: 2em;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .toggle {
     visibility: hidden;
+    width: 0;
+    height: 0;
 }
 
 .toggle + label {
