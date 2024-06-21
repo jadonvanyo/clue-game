@@ -1,0 +1,27 @@
+.brand {
+    font-size: x-large;
+    font-weight: 650;
+    color: var(--primary-text-color);
+    text-decoration: none;
+    padding-left: 1em;
+}
+
+nav {
+    background-color: var(--navbar-background-color);
+    padding: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-right-side {
+    display: flex;
+    justify-content: space-evenly;
+    padding-right: 1em;
+}
+
+.navbar-link {
+    padding-right: 1em;
+    color: var(--tertiary-text-color);
+}

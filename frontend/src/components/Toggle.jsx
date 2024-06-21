@@ -1,6 +1,6 @@
 import "../styles/Toggle.css";
 
-export const Toggle = ({ handleChange, isChecked }) => {
+const Toggle = ({ handleChange, isChecked }) => {
   return (
     <div className="toggle-container">
       <input
@@ -14,3 +14,5 @@ export const Toggle = ({ handleChange, isChecked }) => {
     </div>
   );
 };
+
+export default Toggle;

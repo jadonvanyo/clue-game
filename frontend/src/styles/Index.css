@@ -1,9 +1,11 @@
 :root {
     --background-color: #e9eaeb;
     --card-background-color: #f6f6f6;
+    --navbar-background-color: #f6f6f6;
     --foreground-color: #003cff;
     --primary-text-color: #0a0a0a;
     --secondary-text-color: #ffffff;
+    --tertiary-text-color: #797979;
     --toggle-bg: #f0eb9d;
     --toggle-fg: #ffd000;
 }
@@ -16,6 +18,7 @@
     --foreground-color: #567aff;
     --primary-text-color: #f6f6f6;
     --secondary-text-color: #0a0a0a;
+    --tertiary-text-color: #e6e6e6;
     --toggle-bg: #283452;
     --toggle-fg: #00a6ff;
 }

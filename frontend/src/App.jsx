@@ -7,9 +7,10 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
-import useLocalStorage from "use-local-storage";
-import "./styles/App.css";
-import { Toggle } from "./components/Toggle";
+import Navbar from './components/Navbar'
+import useLocalStorage from 'use-local-storage'
+import './styles/App.css'
+import Toggle from './components/Toggle'
 
 // Clear tokens from local storage and return user to the login page
 function Logout() {
@@ -32,7 +33,7 @@ function App() {
   return (
     <div className="App" data-theme={isDark ? "dark" : "light"}>
       <BrowserRouter >
-      <Toggle isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
+      <Navbar isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
         <Routes>
           <Route
             path="/" 
