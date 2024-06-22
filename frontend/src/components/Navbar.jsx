@@ -10,9 +10,7 @@ const Navbar = ({isChecked, handleChange}) => {
                 <a href="/register" className='navbar-link'>Register</a>
                 <a href="/login" className='navbar-link'>Login</a>
                 <Toggle isChecked={isChecked} handleChange={handleChange} />
-                
             </div>
-            
         </nav>
     );
 }
