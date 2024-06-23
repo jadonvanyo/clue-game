@@ -1,15 +1,23 @@
 import '../styles/Navbar.css'
 import Toggle from './Toggle'
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
-// TODO: make navbar change based on user login
-const Navbar = ({isChecked, handleChange}) => {
+const Navbar = ({ isChecked, handleChange }) => {
+    const { user } = useContext(AuthContext);
+
     return (
         <nav>
             <a href="/" className="brand">Clue</a>
-            
+
             <div className='navbar-right-side'>
-                <a href="/register" className='navbar-link'>Register</a>
-                <a href="/login" className='navbar-link'>Login</a>
+                {user ?
+                    <a href="/logout" className='navbar-link'>Logout</a> :
+                    <>
+                        <a href="/register" className='navbar-link'>Register</a>
+                        <a href="/login" className='navbar-link'>Login</a>
+                    </>
+                }
                 <Toggle isChecked={isChecked} handleChange={handleChange} />
             </div>
         </nav>

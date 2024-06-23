@@ -28,6 +28,7 @@ function App() {
           element={user ? <Home /> : <Navigate to="/login" />}
         />
         <Route path="/login" element={<Login />} />
+        {/* TODO: Logout user */}
         <Route path="/logout" element={useContext(AuthContext).logoutUser} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
