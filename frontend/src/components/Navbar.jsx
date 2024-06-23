@@ -1,6 +1,7 @@
 import '../styles/Navbar.css'
 import Toggle from './Toggle'
 
+// TODO: make navbar change based on user login
 const Navbar = ({isChecked, handleChange}) => {
     return (
         <nav>

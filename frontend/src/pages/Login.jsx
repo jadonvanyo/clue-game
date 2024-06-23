@@ -1,8 +1,11 @@
-import Form from "../components/Form"
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import Form from '../components/Form';
 
-function Login() {
-    // return the login form using the token api route
-    return <Form route="api/token/" method="login" />
-}
+const Login = () => {
+    return (
+        <Form method='login' />
+    );
+};
 
-export default Login
+export default Login;
