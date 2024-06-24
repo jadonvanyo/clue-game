@@ -54,20 +54,31 @@ const AuthProvider = ({ children }) => {
         logoutUser
     };
 
-    // TODO: Update to follow protected route 
     useEffect(() => {
+        // determine if there are authTokens in local storage
         if (authTokens) {
+            // set an api call to refresh the access token every 4 minutes
             const interval = setInterval(() => {
-                api.post('token/refresh/', {
+                // request new access token from api using refresh token
+                api.post('api/token/refresh/', {
                     refresh: authTokens.refresh
+                // if request was successful update access token and local storage with new access token
                 }).then((response) => {
+                    // update auth tokens
                     setAuthTokens(prev => ({
                         ...prev,
                         access: response.data.access
                     }));
+                    // update local storage
                     localStorage.setItem(ACCESS_TOKEN, response.data.access);
+                    console.log(response.data);
+                // log any errors and logout user if an error occurs
+                }).catch((error) => {
+                    console.error('Failed to refresh token', error);
+                    logoutUser();
                 });
             }, 4 * 60 * 1000);
+            // clear interval to prevent memory leaks
             return () => clearInterval(interval);
         }
     }, [authTokens]);
