@@ -9,7 +9,6 @@ import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar'
 import useLocalStorage from 'use-local-storage'
 import './styles/App.css'
-import Toggle from './components/Toggle'
 import { AuthContext } from './context/AuthContext'
 import Logout from './components/Logout'
 
@@ -29,7 +28,6 @@ function App() {
           element={user ? <Home /> : <Navigate to="/login" />}
         />
         <Route path="/login" element={<Login />} />
-        {/* TODO: Logout user */}
         <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
