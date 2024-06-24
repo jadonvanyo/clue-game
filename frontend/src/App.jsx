@@ -11,6 +11,7 @@ import useLocalStorage from 'use-local-storage'
 import './styles/App.css'
 import Toggle from './components/Toggle'
 import { AuthContext } from './context/AuthContext'
+import Logout from './components/Logout'
 
 // Specify routes to navigate between
 function App() {
@@ -29,7 +30,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         {/* TODO: Logout user */}
-        <Route path="/logout" element={useContext(AuthContext).logoutUser} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>

@@ -33,6 +33,7 @@ const AuthProvider = ({ children }) => {
             setUser(jwtDecode(response.data.access));
             localStorage.setItem(ACCESS_TOKEN, response.data.access);
             localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+            // TODO: move navigate out of here
             navigate("/");
         }
     };
