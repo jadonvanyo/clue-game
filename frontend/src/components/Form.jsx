@@ -9,7 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 // route: directory for api backend
 // method: login or register
 function Form( {method} ) {
-    const { loginUser } = useContext(AuthContext);
+    const { loginUser, registerUser } = useContext(AuthContext);
 
     // Set initial username and password to nothing
     const [username, setUsername] = useState("");
@@ -26,7 +26,9 @@ function Form( {method} ) {
         try {
             if (method === "login") {
                 await loginUser(username, password);
-            } 
+            } else {
+                await registerUser(username, password)
+            }
         // alert the user if there are any login issues
         } catch (error) {
             alert(error)

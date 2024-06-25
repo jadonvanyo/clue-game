@@ -26,7 +26,6 @@ const AuthProvider = ({ children }) => {
             username,
             password
         });
-        console.log(response)
         // set user and auth tokens and save auth tokens in local storage if access token was received
         if (response.data.access) {
             setAuthTokens(response.data);
@@ -45,13 +44,23 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem(REFRESH_TOKEN);
     };
 
-    // TODO: Add registerUser
+    // TODO: Fix issues storing registered user passwords (python?)
+    const registerUser = async (username, password) => {
+        // get a response from the api given the username and password
+        const response = await api.post('api/register/', {
+            username,
+            password
+        });
+        // redirect to the login
+        navigate("/login")
+    };
 
     const contextData = {
         user,
         authTokens,
         loginUser,
-        logoutUser
+        logoutUser,
+        registerUser
     };
 
     useEffect(() => {
