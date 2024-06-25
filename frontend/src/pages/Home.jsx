@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react"
-import api from "../api"
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
+const Home = () => {
+    const { user, logoutUser } = useContext(AuthContext);
 
-function Home() {
+    return (
+        <div>
+            <h2>Home</h2>
+            <p>Welcome, {user.username}!</p>
+            <button onClick={logoutUser}>Logout</button>
+        </div>
+    );
+};
 
-    return <div>
-        <h2>Home</h2>
-    </div>
-}
-
-export default Home
+export default Home;
