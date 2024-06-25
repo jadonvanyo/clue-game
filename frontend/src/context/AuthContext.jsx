@@ -44,7 +44,6 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem(REFRESH_TOKEN);
     };
 
-    // TODO: Fix issues storing registered user passwords (python?)
     const registerUser = async (username, password) => {
         // get a response from the api given the username and password
         const response = await api.post('api/register/', {

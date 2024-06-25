@@ -11,6 +11,7 @@ import useLocalStorage from 'use-local-storage'
 import './styles/App.css'
 import { AuthContext } from './context/AuthContext'
 import Logout from './components/Logout'
+import ProtectedRoute from './components/ProtectedRoute'
 
 // Specify routes to navigate between
 function App() {
@@ -25,7 +26,7 @@ function App() {
       <Routes>
         <Route
           path="/" 
-          element={user ? <Home /> : <Navigate to="/login" />}
+          element={<ProtectedRoute><Home /></ProtectedRoute>}
         />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
