@@ -11,6 +11,7 @@ import useLocalStorage from 'use-local-storage'
 import './styles/App.css'
 import { AuthContext } from './context/AuthContext'
 import Logout from './components/Logout'
+import JoinGame from './pages/JoinGame'
 import Room from './pages/Room'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -26,7 +27,8 @@ function App() {
       <Navbar isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/room" element={<ProtectedRoute><Room /></ProtectedRoute>} />
+        <Route path="/joingame" element={<ProtectedRoute><JoinGame /></ProtectedRoute>} />
+        <Route path="/room/:roomName" element= {<Room />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />

@@ -63,4 +63,4 @@ function Form( {method} ) {
     );
 };
 
-export default Form
+export default Form;

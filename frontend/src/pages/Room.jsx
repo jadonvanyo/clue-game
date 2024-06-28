@@ -1,52 +1,48 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Room = () => {
-  const [color, setColor] = useState('white');
-  const [room, setRoom] = useState('');
-  const socket = useRef(null);
+    const { roomName } = useParams();
+    const [color, setColor] = useState('white');
+    const socket = useRef(null);
 
-  const joinRoom = (roomName) => {
-    if (socket.current) {
-      socket.current.close();
-    }
+    useEffect(() => {
+        socket.current = new WebSocket(`ws://localhost:8000/ws/room/${roomName}/`);
 
-    socket.current = new WebSocket(`ws://localhost:8000/ws/room/${roomName}/`);
+        socket.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setColor(data.color);
+        };
 
-    socket.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setColor(data.color);
+        socket.current.onclose = () => {
+            console.log('WebSocket closed');
+        };
+
+        socket.current.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        return () => {
+            if (socket.current) {
+                socket.current.close();
+            }
+        };
+    }, [roomName]);
+
+
+    const changeColor = (newColor) => {
+        setColor(newColor);
+        socket.current.send(JSON.stringify({ color: newColor }));
     };
-
-    socket.current.onclose = () => {
-      console.log('WebSocket closed');
-    };
-
-    socket.current.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-  };
-
-  const changeColor = (newColor) => {
-    setColor(newColor);
-    socket.current.send(JSON.stringify({ color: newColor }));
-  };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={room}
-        onChange={(e) => setRoom(e.target.value)}
-        placeholder="Enter room name"
-      />
-      <button onClick={() => joinRoom(room)}>Join Room</button>
-
-      <div style={{ backgroundColor: color, height: '100vh' }}>
-        <button onClick={() => changeColor('red')}>Red</button>
-        <button onClick={() => changeColor('blue')}>Blue</button>
-        <button onClick={() => changeColor('green')}>Green</button>
-      </div>
-    </div>
+        <div>
+            <div style={{ backgroundColor: color, height: '100vh' }}>
+                <button onClick={() => changeColor('red')}>Red</button>
+                <button onClick={() => changeColor('blue')}>Blue</button>
+                <button onClick={() => changeColor('green')}>Green</button>
+            </div>
+        </div>
   );
 };
 

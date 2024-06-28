@@ -12,7 +12,10 @@ const Navbar = ({ isChecked, handleChange }) => {
 
             <div className='navbar-right-side'>
                 {user ?
-                    <a href="/logout" className='navbar-link'>Logout</a> :
+                    <>
+                        <a href="/joingame" className='navbar-link'>Join Game</a>
+                        <a href="/logout" className='navbar-link'>Logout</a>
+                    </> :
                     <>
                         <a href="/register" className='navbar-link'>Register</a>
                         <a href="/login" className='navbar-link'>Login</a>
