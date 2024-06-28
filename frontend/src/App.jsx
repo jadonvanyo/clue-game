@@ -11,6 +11,7 @@ import useLocalStorage from 'use-local-storage'
 import './styles/App.css'
 import { AuthContext } from './context/AuthContext'
 import Logout from './components/Logout'
+import Room from './pages/Room'
 import ProtectedRoute from './components/ProtectedRoute'
 
 // Specify routes to navigate between
@@ -24,10 +25,8 @@ function App() {
     <div className="App" data-theme={isDark ? "dark" : "light"}>
       <Navbar isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
       <Routes>
-        <Route
-          path="/" 
-          element={<ProtectedRoute><Home /></ProtectedRoute>}
-        />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/room" element={<ProtectedRoute><Room /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
