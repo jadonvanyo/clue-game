@@ -13,6 +13,7 @@ import { AuthContext } from './context/AuthContext'
 import Logout from './components/Logout'
 import JoinGame from './pages/JoinGame'
 import Room from './pages/Room'
+import Board from './components/Board'
 import ProtectedRoute from './components/ProtectedRoute'
 
 // Specify routes to navigate between
@@ -28,7 +29,8 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/joingame" element={<ProtectedRoute><JoinGame /></ProtectedRoute>} />
-        <Route path="/room/:roomName" element= {<Room />} />
+        <Route path="/room/:roomName" element={<Room />} />
+        <Route path="/board" element={<Board />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
