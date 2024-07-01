@@ -1,10 +1,42 @@
 import Square from "./Square";
 import "../styles/Board.css"
-import { useState } from "react";
+import { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function Board() {
+    const { roomName } = useParams(); // get room name from the URL
+    const socket = useRef(null); // socket reference that closes when the page does
     const [xIsNext, setXIsNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
+
+    // runs when component mounts and room name changes
+    useEffect(() => {
+        // establish a new Websocket connection using api and room name
+        socket.current = new WebSocket(`ws://localhost:8000/ws/room/${roomName}/`);
+
+        // establish event handler for receiving messages
+        socket.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setSquares(data.board); // update board
+        };
+
+        // event handler for closing websocket
+        socket.current.onclose = () => {
+            console.log('WebSocket closed');
+        };
+
+        // event handler for errors connecting to the websocket
+        socket.current.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        // cleanup to close the websocket when the component unmounts or room name changes
+        return () => {
+            if (socket.current) {
+                socket.current.close();
+            }
+        };
+    }, [roomName]);
 
     const calculateWinner = (squares) => {
         const lines = [
@@ -17,6 +49,7 @@ export default function Board() {
           [0, 4, 8],
           [2, 4, 6]
         ];
+
         for (let i = 0; i < lines.length; i++) {
           const [a, b, c] = lines[i];
           if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -40,7 +73,8 @@ export default function Board() {
         }
         
         setSquares(nextSquare);
-        setXIsNext(!xIsNext)
+        setXIsNext(!xIsNext);
+        socket.current.send(JSON.stringify({ board: nextSquare })); // send new squares to server
     }
 
     const winner = calculateWinner(squares);

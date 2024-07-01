@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-// TODO: Understand this
 const Room = () => {
     const { roomName } = useParams(); // get room name from the URL
     const [color, setColor] = useState('white'); // set up the initial background color
