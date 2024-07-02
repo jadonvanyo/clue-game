@@ -7,6 +7,9 @@ class RoomConsumer(AsyncWebsocketConsumer):
     Args:
         AsyncWebsocketConsumer: base class to handle asynchronous websocket
     """
+    # Store the current state of the room
+    room_state = {}
+    
     # Called when a websocket connection is established
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name'] # extract room name from the url route parameters
@@ -20,6 +23,12 @@ class RoomConsumer(AsyncWebsocketConsumer):
 
         # accept websocket connection
         await self.accept()
+        
+        # Send the current state to the new client
+        current_board = self.room_state.get(self.room_name, [None] * 9)
+        await self.send(text_data=json.dumps({
+            'board': current_board
+        }))
 
     # Leave room group
     async def disconnect(self, close_code):
@@ -33,6 +42,9 @@ class RoomConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         board = data['board']
         player = data['player']
+        
+        # Update the room's state in the state dictionary
+        self.room_state[self.room_name] = board
 
         # Send message to room group
         await self.channel_layer.group_send(
