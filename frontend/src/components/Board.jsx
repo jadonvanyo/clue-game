@@ -1,12 +1,15 @@
 import Square from "./Square";
 import "../styles/Board.css"
-import { useState, useRef, useEffect } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Board() {
+    const { user } = useContext(AuthContext); // get the user's username
     const { roomName } = useParams(); // get room name from the URL
     const socket = useRef(null); // socket reference that closes when the page does
-    const [xIsNext, setXIsNext] = useState(true);
+    const [player, setPlayer] = useState(null);
+    const [turn, setTurn] = useState("X");
     const [squares, setSquares] = useState(Array(9).fill(null));
 
     // runs when component mounts and room name changes
@@ -17,7 +20,9 @@ export default function Board() {
         // establish event handler for receiving messages
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            console.log(data);
             setSquares(data.board); // update board
+            setTurn(data.player === "X" ? "O" : "X");
         };
 
         // event handler for closing websocket
@@ -59,30 +64,64 @@ export default function Board() {
         return null;
     }
 
+    const checkIfFilled = () => {
+        let filled = true;
+        squares.forEach((square) =>{
+            if (!square) {
+                filled = false;
+            }
+        });
+
+        return filled;
+    }
+
     const handleClick = (i) => {
-        if (squares[i] || calculateWinner(squares)) {
+        if (turn !== player || squares[i] || calculateWinner(squares)) {
             return;
         }
 
         const nextSquare = squares.slice();
+        nextSquare[i] = player;
 
-        if (xIsNext) {
-            nextSquare[i] = 'X';
-        } else {
-            nextSquare[i] = 'O';
-        }
+        // setTurn(turn === "X" ? "O" : "X");
         
         setSquares(nextSquare);
-        setXIsNext(!xIsNext);
-        socket.current.send(JSON.stringify({ board: nextSquare })); // send new squares to server
+        
+        socket.current.send(JSON.stringify({ 
+            board: nextSquare,
+            player: player
+        })); // send new squares and who played them to server
+    }
+
+    const resetGame = () => {
+        const emptySquares = Array(9).fill(null);
+
+        socket.current.send(JSON.stringify({ 
+            board: emptySquares,
+            player: player
+        })); // send reset squares and who reset them to server
+
+    }
+
+    const setX = () => {
+        setPlayer("X");
+        console.log(player);
+    }
+
+    const setO = () => {
+        setPlayer("O");
+        console.log(player);
     }
 
     const winner = calculateWinner(squares);
+    const filled = checkIfFilled();
     let status;
     if (winner) {
         status = "Winner: " + winner;
+    } else if (filled) {
+        status = "Tie";
     } else {
-        status = "Next player: " + (xIsNext ? "X" : "O");
+        status = "Next player: " + (turn === "X" ? "X" : "O");
     }
 
     return (
@@ -103,6 +142,15 @@ export default function Board() {
                 <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
                 <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </div>
+            {winner || filled ?
+                <button onClick={resetGame}>Reset</button> : null
+            }
+            {!player ?
+                <>
+                    <button onClick={setX}>X</button> 
+                    <button onClick={setO}>O</button>
+                </> : null
+            }
         </>
     );
 }
