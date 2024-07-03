@@ -40,8 +40,11 @@ class RoomConsumer(AsyncWebsocketConsumer):
     # handle message received from individual client
     async def receive(self, text_data):
         data = json.loads(text_data)
+        print(data)
         board = data['board']
-        player = data['player']
+        last_player = data['lastPlayer']
+        player_x = data['playerX']
+        player_o = data['playerO']
         
         # Update the room's state in the state dictionary
         self.room_state[self.room_name] = board
@@ -52,17 +55,23 @@ class RoomConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'change_board',
                 'board': board,
-                'player': player
+                'lastPlayer': last_player,
+                'playerX': player_x,
+                'playerO': player_o
             }
         )
 
     # send message to a specified group
     async def change_board(self, event):
         board = event['board']
-        player = event['player']
+        last_player = event['lastPlayer']
+        player_x = event['playerX']
+        player_o = event['playerO']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'board': board,
-            'player': player
+            'lastPlayer': last_player,
+            'playerX': player_x,
+            'playerO': player_o
         }))

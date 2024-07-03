@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/joingame" element={<ProtectedRoute><JoinGame /></ProtectedRoute>} />
-        <Route path="/room/:roomName" element={<Board />} />
+        <Route path="/room/:roomName" element={<ProtectedRoute><Room /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />

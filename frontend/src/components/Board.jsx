@@ -82,8 +82,6 @@ export default function Board() {
 
         const nextSquare = squares.slice();
         nextSquare[i] = player;
-
-        // setTurn(turn === "X" ? "O" : "X");
         
         setSquares(nextSquare);
         

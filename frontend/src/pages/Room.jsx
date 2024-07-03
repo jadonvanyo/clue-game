@@ -1,10 +1,36 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+// import TicTacToePlayerSelect from '../components/TicTacToePlayerSelect';
+// import GameBoard from './GameBoard';
+
+const TicTacToePlayerSelect = ({ onSelect }) => {
+    const [selectedPlayer, setSelectedPlayer] = useState(null);
+
+    const handleSelect = (choice) => {
+        setSelectedPlayer(choice);
+        onSelect(choice);
+    };
+
+    return (
+        <div>
+            <h2>Select Your Player</h2>
+            <button onClick={() => handleSelect('X')}>Play as X</button>
+            <button onClick={() => handleSelect('O')}>Play as O</button>
+            {selectedPlayer && <p>You selected: {selectedPlayer}</p>}
+        </div>
+    );
+};
 
 const Room = () => {
+
+    const { user } = useContext(AuthContext); // get the user's username
     const { roomName } = useParams(); // get room name from the URL
-    const [color, setColor] = useState('white'); // set up the initial background color
     const socket = useRef(null); // socket reference that closes when the page does
+    const [playerX, setPlayerX] = useState("");
+    const [playerO, setPlayerO] = useState("");
+    const [turn, setTurn] = useState("X");
+    const [squares, setSquares] = useState(Array(9).fill(null));
 
     // runs when component mounts and room name changes
     useEffect(() => {
@@ -14,7 +40,11 @@ const Room = () => {
         // establish event handler for receiving messages
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            setColor(data.color); // update background color
+            console.log(data);
+            const board = data.board; // update board
+            const lastPlayer = data.lastPlayer;
+            setPlayerX(data.playerX);
+            setPlayerO(data.playerO);
         };
 
         // event handler for closing websocket
@@ -35,21 +65,43 @@ const Room = () => {
         };
     }, [roomName]);
 
-    // send message to websocket to change the color of the background
-    const changeColor = (newColor) => {
-        setColor(newColor);
-        socket.current.send(JSON.stringify({ color: newColor })); // send new color to the server
+    useEffect(()=> {
+        console.log(playerX, playerO)
+        // socket.current.send(JSON.stringify({ 
+        //     board: null,
+        //     lastPlayer: null,
+        //     playerX: playerX,
+        //     playerO: playerO
+        // }));
+    }, [playerX, playerO])
+
+    const handleSelect = async (choice) => {
+        if (choice === 'X') {
+            if (playerO === user.user_id) {
+                setPlayerO(null);
+            }
+            setPlayerX(user.user_id);
+        } else if (choice === 'O') {
+            if (playerX === user.user_id) {
+                setPlayerX(null);
+            }
+            setPlayerO(user.user_id);
+        }
     };
 
-  return (
+    // Check if both players have made their selections
+    const bothPlayersSelected = playerX && playerO;
+
+    return (
         <div>
-            <div style={{ backgroundColor: color, height: '100vh' }}>
-                <button onClick={() => changeColor('red')}>Red</button>
-                <button onClick={() => changeColor('blue')}>Blue</button>
-                <button onClick={() => changeColor('green')}>Green</button>
-            </div>
+        {!bothPlayersSelected ? (
+            <TicTacToePlayerSelect onSelect={handleSelect}/>
+        ) : (
+            null
+            // <GameBoard playerX={playerX} playerO={playerO} />
+        )}
         </div>
-  );
+    );
 };
 
 export default Room;
