@@ -25,10 +25,16 @@ class RoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
         
         # Send the current state to the new client
-        current_board = self.room_state.get(self.room_name, [None] * 9)
-        await self.send(text_data=json.dumps({
-            'board': current_board
-        }))
+        if self.room_state:
+            current_board = self.room_state[self.room_name].get('current_board', [None] * 9)
+            player_x = self.room_state[self.room_name].get('player_x', None)
+            player_o = self.room_state[self.room_name].get('player_o', None)
+            
+            await self.send(text_data=json.dumps({
+                'board': current_board,
+                'playerX': player_x,
+                'playerO': player_o
+            }))
 
     # Leave room group
     async def disconnect(self, close_code):
@@ -47,7 +53,10 @@ class RoomConsumer(AsyncWebsocketConsumer):
         player_o = data['playerO']
         
         # Update the room's state in the state dictionary
-        self.room_state[self.room_name] = board
+        self.room_state[self.room_name] = {}
+        self.room_state[self.room_name]['current_board'] = board
+        self.room_state[self.room_name]['player_x'] = player_x
+        self.room_state[self.room_name]['player_o'] = player_o
 
         # Send message to room group
         await self.channel_layer.group_send(

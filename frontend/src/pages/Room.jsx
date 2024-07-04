@@ -1,34 +1,16 @@
 import { useState, useRef, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-// import TicTacToePlayerSelect from '../components/TicTacToePlayerSelect';
+import TicTacToePlayerSelect from '../components/TicTacToePlayerSelect';
 // import GameBoard from './GameBoard';
-
-const TicTacToePlayerSelect = ({ onSelect }) => {
-    const [selectedPlayer, setSelectedPlayer] = useState(null);
-
-    const handleSelect = (choice) => {
-        setSelectedPlayer(choice);
-        onSelect(choice);
-    };
-
-    return (
-        <div>
-            <h2>Select Your Player</h2>
-            <button onClick={() => handleSelect('X')}>Play as X</button>
-            <button onClick={() => handleSelect('O')}>Play as O</button>
-            {selectedPlayer && <p>You selected: {selectedPlayer}</p>}
-        </div>
-    );
-};
 
 const Room = () => {
 
     const { user } = useContext(AuthContext); // get the user's username
     const { roomName } = useParams(); // get room name from the URL
     const socket = useRef(null); // socket reference that closes when the page does
-    const [playerX, setPlayerX] = useState("");
-    const [playerO, setPlayerO] = useState("");
+    const [playerX, setPlayerX] = useState(null);
+    const [playerO, setPlayerO] = useState(null);
     const [turn, setTurn] = useState("X");
     const [squares, setSquares] = useState(Array(9).fill(null));
 
@@ -66,16 +48,19 @@ const Room = () => {
     }, [roomName]);
 
     useEffect(()=> {
-        console.log(playerX, playerO)
-        // socket.current.send(JSON.stringify({ 
-        //     board: null,
-        //     lastPlayer: null,
-        //     playerX: playerX,
-        //     playerO: playerO
-        // }));
+        // only run if there is a playerX or playerO to prevent running at program start
+        if (playerX || playerO) {
+            console.log(playerX, playerO);
+            socket.current.send(JSON.stringify({ 
+                board: null,
+                lastPlayer: null,
+                playerX: playerX ? playerX : null, // send null if no playerX
+                playerO: playerO ? playerO : null // send null if no playerO
+            }));
+        }
     }, [playerX, playerO])
 
-    const handleSelect = async (choice) => {
+    const handleSelect = (choice) => {
         if (choice === 'X') {
             if (playerO === user.user_id) {
                 setPlayerO(null);
@@ -95,7 +80,7 @@ const Room = () => {
     return (
         <div>
         {!bothPlayersSelected ? (
-            <TicTacToePlayerSelect onSelect={handleSelect}/>
+            <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
         ) : (
             null
             // <GameBoard playerX={playerX} playerO={playerO} />
