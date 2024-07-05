@@ -2,17 +2,19 @@ import { useState, useRef, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import TicTacToePlayerSelect from '../components/TicTacToePlayerSelect';
-// import GameBoard from './GameBoard';
+import Board from '../components/Board';
 
 const Room = () => {
 
     const { user } = useContext(AuthContext); // get the user's username
     const { roomName } = useParams(); // get room name from the URL
     const socket = useRef(null); // socket reference that closes when the page does
+    // Track who is assigned each player
     const [playerX, setPlayerX] = useState(null);
     const [playerO, setPlayerO] = useState(null);
-    const [turn, setTurn] = useState("X");
-    const [squares, setSquares] = useState(Array(9).fill(null));
+    const [board, setBoard] = useState(Array(9).fill(null));
+    const [lastPlayer, setLastPlayer] = useState(null);
+
 
     // runs when component mounts and room name changes
     useEffect(() => {
@@ -23,8 +25,8 @@ const Room = () => {
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
             console.log(data);
-            const board = data.board; // update board
-            const lastPlayer = data.lastPlayer;
+            setBoard(data.board, console.log(board)); // update board
+            setLastPlayer(data.lastPlayer);
             setPlayerX(data.playerX);
             setPlayerO(data.playerO);
         };
@@ -49,10 +51,11 @@ const Room = () => {
 
     useEffect(()=> {
         // only run if there is a playerX or playerO to prevent running at program start
-        if (playerX || playerO) {
+        if ((playerX || playerO) && board) {
             console.log(playerX, playerO);
+            console.log(board);
             socket.current.send(JSON.stringify({ 
-                board: null,
+                board: board,
                 lastPlayer: null,
                 playerX: playerX ? playerX : null, // send null if no playerX
                 playerO: playerO ? playerO : null // send null if no playerO
@@ -82,8 +85,7 @@ const Room = () => {
         {!bothPlayersSelected ? (
             <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
         ) : (
-            null
-            // <GameBoard playerX={playerX} playerO={playerO} />
+            <Board playerX={playerX} playerO={playerO} lastPlayer={lastPlayer} board={board}/>
         )}
         </div>
     );
