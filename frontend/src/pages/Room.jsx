@@ -52,11 +52,9 @@ const Room = () => {
     useEffect(()=> {
         // only run if there is a playerX or playerO to prevent running at program start
         if ((playerX || playerO) && board) {
-            console.log(playerX, playerO);
-            console.log(board);
             socket.current.send(JSON.stringify({ 
                 board: board,
-                lastPlayer: null,
+                lastPlayer: lastPlayer ? lastPlayer : null, // send null if no lastPlayer
                 playerX: playerX ? playerX : null, // send null if no playerX
                 playerO: playerO ? playerO : null // send null if no playerO
             }));
@@ -85,7 +83,14 @@ const Room = () => {
         {!bothPlayersSelected ? (
             <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
         ) : (
-            <Board playerX={playerX} playerO={playerO} lastPlayer={lastPlayer} board={board} socket={socket.current} user={user}/>
+            <Board 
+                playerX={playerX} 
+                playerO={playerO} 
+                lastPlayer={lastPlayer} 
+                board={board} 
+                socket={socket.current} 
+                user={user}
+            />
         )}
         </div>
     );

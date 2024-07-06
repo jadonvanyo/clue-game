@@ -3,7 +3,7 @@ import "../styles/TicTacToeBoard.css"
 import { useState, useEffect } from 'react';
 
 export default function Board({ playerX, playerO, lastPlayer, board, socket, user}) {
-    const [turn, setTurn] = useState(playerX);
+    const [turn, setTurn] = useState(lastPlayer);
     const [squares, setSquares] = useState(Array(9).fill(null));
 
     useEffect(() => {
@@ -44,7 +44,6 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
     }
 
     const handleClick = (i) => {
-        const currentPlayer = lastPlayer === playerX ? playerO : playerX;
         if (turn !== user.user_id || squares[i] || calculateWinner(squares)) {
             return;
         }
@@ -56,7 +55,7 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
         
         socket.send(JSON.stringify({ 
             board: nextSquare,
-            lastPlayer: currentPlayer,
+            lastPlayer: user.user_id,
             playerX: playerX,
             playerO: playerO
         })); // send new squares and who played them to server
@@ -83,7 +82,7 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
     } else if (filled) {
         status = "Tie";
     } else {
-        status = "Next player: " + (turn === "X" ? "X" : "O");
+        status = "Next player: " + (turn === playerX ? "X" : "O");
     }
 
     return (
