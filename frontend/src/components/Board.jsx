@@ -2,10 +2,9 @@ import Square from "./Square";
 import "../styles/TicTacToeBoard.css"
 import { useState, useEffect } from 'react';
 
-export default function Board({ playerX, playerO, lastPlayer, board }) {
+export default function Board({ playerX, playerO, lastPlayer, board, socket, user}) {
     const [turn, setTurn] = useState(playerX);
     const [squares, setSquares] = useState(Array(9).fill(null));
-    // console.log(`Initial squares: ${squares}`)
 
     useEffect(() => {
         setSquares(board); // update board
@@ -14,19 +13,18 @@ export default function Board({ playerX, playerO, lastPlayer, board }) {
 
     const calculateWinner = (squares) => {
         const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
         ];
 
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
-            console.log(`Squares at calculate winner: ${squares}`);
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
                 return squares[a];
             }
@@ -47,7 +45,7 @@ export default function Board({ playerX, playerO, lastPlayer, board }) {
 
     const handleClick = (i) => {
         const currentPlayer = lastPlayer === playerX ? playerO : playerX;
-        if (turn !== currentPlayer || squares[i] || calculateWinner(squares)) {
+        if (turn !== user.user_id || squares[i] || calculateWinner(squares)) {
             return;
         }
 
@@ -56,16 +54,18 @@ export default function Board({ playerX, playerO, lastPlayer, board }) {
         
         setSquares(nextSquare);
         
-        socket.current.send(JSON.stringify({ 
+        socket.send(JSON.stringify({ 
             board: nextSquare,
-            lastPlayer: currentPlayer
+            lastPlayer: currentPlayer,
+            playerX: playerX,
+            playerO: playerO
         })); // send new squares and who played them to server
     }
 
     const resetGame = () => {
         const emptySquares = Array(9).fill(null);
 
-        socket.current.send(JSON.stringify({ 
+        socket.send(JSON.stringify({ 
             board: emptySquares,
             lastPlayer: turn,
             playerX: playerX,

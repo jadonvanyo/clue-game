@@ -25,7 +25,7 @@ const Room = () => {
         socket.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
             console.log(data);
-            setBoard(data.board, console.log(board)); // update board
+            setBoard(data.board); // update board
             setLastPlayer(data.lastPlayer);
             setPlayerX(data.playerX);
             setPlayerO(data.playerO);
@@ -85,7 +85,7 @@ const Room = () => {
         {!bothPlayersSelected ? (
             <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
         ) : (
-            <Board playerX={playerX} playerO={playerO} lastPlayer={lastPlayer} board={board}/>
+            <Board playerX={playerX} playerO={playerO} lastPlayer={lastPlayer} board={board} socket={socket.current} user={user}/>
         )}
         </div>
     );
