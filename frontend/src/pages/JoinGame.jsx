@@ -1,25 +1,25 @@
-import Room from "./Room";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Form.css";
 
 export default function JoinGame() {
     const [room, setRoom] = useState('');
     const navigate = useNavigate(); // Set navigate
 
     const handleClick = () => {
-        console.log(room);
         navigate(`/room/${room}`);
     };
 
     return (
-        <div>
+        <div className="form-container">
             <input
+                className="form-input"
                 type="text"
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 placeholder="Enter room name"
             />
-            <button onClick={handleClick}>Join Room</button>
+            <button className="form-button" onClick={handleClick}>Join Room</button>
         </div>
     )
 }
