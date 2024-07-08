@@ -23,5 +23,6 @@ nav {
 
 .navbar-link {
     padding-right: 1em;
+    text-decoration: none;
     color: var(--tertiary-text-color);
 }
