@@ -6,6 +6,8 @@
     --primary-text-color: #0a0a0a;
     --secondary-text-color: #ffffff;
     --tertiary-text-color: #797979;
+    --secondary-button: #e9eaeb;
+    --secondary-button-hover: #a3a4a5;
     --toggle-bg: #f0eb9d;
     --toggle-fg: #ffd000;
 }
@@ -19,6 +21,8 @@
     --primary-text-color: #f6f6f6;
     --secondary-text-color: #0a0a0a;
     --tertiary-text-color: #e6e6e6;
+    --secondary-button: #a3a4a5;
+    --secondary-button-hover: #575757;
     --toggle-bg: #283452;
     --toggle-fg: #00a6ff;
 }

@@ -96,7 +96,7 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
     }
 
     return (
-        <>
+        <div className="board-container">
             <div className="status">{status}</div>
             <div className="board-row">
                 <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
@@ -113,10 +113,13 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
                 <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
                 <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </div>
-            {winner || filled ?
-                <button onClick={resetGame}>Reset</button> : null
-            }
-            <button onClick={leaveGame}>Leave Game</button>
-        </>
+            <div className="status-button-container">
+                {winner || filled ?
+                    <button className="status-button" onClick={resetGame}>Reset</button> : null
+                }
+                <button className="status-button" onClick={leaveGame}>Leave Game</button>
+            </div>
+            
+        </div>
     );
 }
