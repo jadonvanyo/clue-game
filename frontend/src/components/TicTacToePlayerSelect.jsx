@@ -1,20 +1,20 @@
-import { useState } from 'react';
+import "../styles/TicTacToePlayerSelect.css"
 
 const TicTacToePlayerSelect = ({ onSelect, playerX, playerO }) => {
-    const [selectedPlayer, setSelectedPlayer] = useState(null);
 
     const handleSelect = (choice) => {
-        setSelectedPlayer(choice);
         onSelect(choice);
     };
 
     return (
-        <div>
+        <div className="player-select-container">
             <h2>Select Your Player</h2>
-            <button onClick={() => handleSelect('X')} disabled={playerX}>Play as X</button>
-            <button onClick={() => handleSelect('O')} disabled={playerO}>Play as O</button>
-            {playerX && <p>X: {playerX}</p>}
-            {playerO && <p>O: {playerO}</p>}
+            <div className="player-button-container">
+                <button className="x-button" onClick={() => handleSelect('X')} disabled={playerX}>Play as X</button>
+                <button className="o-button" onClick={() => handleSelect('O')} disabled={playerO}>Play as O</button>
+            </div>
+            {playerX && <p>Player "X": {playerX}</p>}
+            {playerO && <p>Player "O": {playerO}</p>}
         </div>
     );
 };

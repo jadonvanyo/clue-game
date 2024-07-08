@@ -79,20 +79,20 @@ const Room = () => {
     const bothPlayersSelected = playerX && playerO;
 
     return (
-        <div>
-        {!bothPlayersSelected ? (
-            <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
-        ) : (
-            <Board 
-                playerX={playerX} 
-                playerO={playerO} 
-                lastPlayer={lastPlayer} 
-                board={board} 
-                socket={socket.current} 
-                user={user}
-            />
-        )}
-        </div>
+        <>
+            {!bothPlayersSelected ? (
+                <TicTacToePlayerSelect onSelect={handleSelect} playerX={playerX} playerO={playerO}/>
+            ) : (
+                <Board 
+                    playerX={playerX} 
+                    playerO={playerO} 
+                    lastPlayer={lastPlayer} 
+                    board={board} 
+                    socket={socket.current} 
+                    user={user}
+                />
+            )}
+        </>
     );
 };
 

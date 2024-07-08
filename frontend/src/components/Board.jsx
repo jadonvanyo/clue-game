@@ -70,7 +70,17 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
             playerX: playerX,
             playerO: playerO
         })); // send reset squares and who reset them to server
+    }
 
+    const leaveGame = () => {
+        const emptySquares = Array(9).fill(null);
+
+        socket.send(JSON.stringify({ 
+            board: emptySquares,
+            lastPlayer: turn,
+            playerX: user.user_id === playerX ? null : playerX,
+            playerO: user.user_id === playerO ? null : playerO
+        }));
     }
 
     const winner = calculateWinner(squares);
@@ -106,6 +116,7 @@ export default function Board({ playerX, playerO, lastPlayer, board, socket, use
             {winner || filled ?
                 <button onClick={resetGame}>Reset</button> : null
             }
+            <button onClick={leaveGame}>Leave Game</button>
         </>
     );
 }
