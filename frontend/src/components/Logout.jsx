@@ -6,7 +6,6 @@ const Logout = () => {
     const { logoutUser } = useContext(AuthContext);
 
     useEffect(() => {
-        console.log('Run useEffect')
         logoutUser();
     }, [logoutUser]);
 

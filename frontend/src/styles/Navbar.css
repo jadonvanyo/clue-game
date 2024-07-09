@@ -8,7 +8,7 @@
 
 nav {
     background-color: var(--navbar-background-color);
-    padding: 1.5em;
+    padding: 1.5em 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,5 +23,6 @@ nav {
 
 .navbar-link {
     padding-right: 1em;
+    text-decoration: none;
     color: var(--tertiary-text-color);
 }

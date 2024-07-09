@@ -1,0 +1,49 @@
+.board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    min-width: 300px;
+    width: 50%;
+    color: var(--primary-text-color);
+    transition: background-color 0.25s ease-in-out;
+    background-color: var(--card-background-color);
+}
+
+.status-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.board-row:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+.status {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.status-button {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    transition: background-color 0.25s ease-in-out;
+    background-color: var(--secondary-button);
+}
+
+.status-button:hover {
+    background-color: var(--secondary-button-hover);
+}
