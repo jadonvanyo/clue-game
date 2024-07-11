@@ -8,7 +8,7 @@ const Navbar = ({ isChecked, handleChange }) => {
 
     return (
         <nav>
-            <a href="/" className="brand">Clue</a>
+            <a href="/" className="brand">Online Games</a>
 
             <div className='navbar-right-side'>
                 {user ?
