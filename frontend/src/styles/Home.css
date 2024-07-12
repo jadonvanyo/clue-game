@@ -1,0 +1,56 @@
+.play-button {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    transition: background-color 0.25s ease-in-out;
+    color: var(--secondary-text-color);
+    background-color: var(--primary-button-color);
+}
+
+.play-button:hover {
+    color: var(--secondary-text-color);
+    background-color: var(--primary-button-hover);
+}
+
+.features {
+    display: flex; 
+    justify-content: space-around; 
+    padding: 0 40px 40px;
+    gap: 25px;
+}
+
+.feature { 
+    width: 22%; 
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: var(--primary-text-color);
+    transition: background-color 0.25s ease-in-out;
+    background-color: var(--card-background-color);
+}
+
+.hero { 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center; 
+    padding: 40px 20px; 
+    color: var(--primary-text-color);
+}
+    
+.hero img { 
+    max-width: 100%; 
+    height: auto; 
+}
+
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .feature {
+        width: 80%; 
+    }
+}

@@ -3,7 +3,7 @@
     font-weight: 650;
     color: var(--primary-text-color);
     text-decoration: none;
-    padding-left: 1em;
+    padding: 0 1em;
 }
 
 nav {
@@ -19,6 +19,7 @@ nav {
     display: flex;
     justify-content: space-evenly;
     padding-right: 1em;
+    align-items: center;
 }
 
 .navbar-link {

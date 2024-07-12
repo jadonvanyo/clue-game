@@ -2,7 +2,8 @@
     --background-color: #e9eaeb;
     --card-background-color: #f6f6f6;
     --navbar-background-color: #f6f6f6;
-    --foreground-color: #003cff;
+    --primary-button-color: #86a2fd;
+    --primary-button-hover: #275aff;
     --primary-text-color: #0a0a0a;
     --secondary-text-color: #ffffff;
     --tertiary-text-color: #797979;
@@ -17,7 +18,8 @@
     --card-background-color: #2f2b3a;
     --navbar-background-color: #575757;
     --dropdown-background-color: #3f3f3f;
-    --foreground-color: #567aff;
+    --primary-button-color: #c3d0ff;
+    --primary-button-hover: #86a2fd;
     --primary-text-color: #f6f6f6;
     --secondary-text-color: #0a0a0a;
     --tertiary-text-color: #e6e6e6;
