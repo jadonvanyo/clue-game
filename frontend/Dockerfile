@@ -16,8 +16,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose the port the app runs on
-EXPOSE 5173
+# Install a simple static file server
+RUN npm install -g serve
 
-# Start the application
-CMD ["npm", "run", "dev"]
+EXPOSE 3000
+
+CMD ["serve", "-s", "dist"]
