@@ -2,9 +2,9 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:5173"
+      - "3000:3000"
     env_file:
-      - .env
+      - ./frontend/.env.production
     depends_on:
       - backend
 
@@ -13,7 +13,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - .env
+      - ./backend/.env
     depends_on:
       - redis
 
