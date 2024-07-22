@@ -1,18 +1,23 @@
 # clue-game
 online multiplayer clue game built with Django and React
 
-# Table of Contents
+## Table of Contents
+- [Background](#background)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
 
-# Background
+## Background
 
-## Problem
+### Problem
 
-## Solution
+### Solution
 
-# Dependencies
+## Dependencies
 
-# Installation
+## Installation
 
-# Usage
+## Usage
 
-# Features
+## Features
