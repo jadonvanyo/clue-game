@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
             username,
             password
         });
+        
         // set user and auth tokens and save auth tokens in local storage if access token was received
         if (response.data.access) {
             setAuthTokens(response.data);
