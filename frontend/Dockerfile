@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base
-FROM node:18-alpine
+FROM --platform=linux/amd64 node:18-alpine
 
 # Set the working directory inside the container
 WORKDIR /frontend
