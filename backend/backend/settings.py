@@ -54,6 +54,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWS_CREDENTIALS = True
 
+# TODO: Update to run from .env
 CORS_ALLOWED_ORIGINS = [
     'http://3.143.218.12',
     'http://localhost',

@@ -19,6 +19,7 @@ const Room = () => {
     // runs when component mounts and room name changes
     useEffect(() => {
         // establish a new Websocket connection using api and room name
+        // TODO: Update to run from .env file
         socket.current = new WebSocket(`ws://3.143.218.12:8000/ws/room/${roomName}/`);
 
         // establish event handler for receiving messages
