@@ -25,7 +25,7 @@ class RoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
         
         # Send the current state to the new client
-        if self.room_state:
+        if self.room_state.get(self.room_name, None) != None:
             current_board = self.room_state[self.room_name].get('current_board', [None] * 9)
             last_player = self.room_state[self.room_name].get('last_player', None)
             player_x = self.room_state[self.room_name].get('player_x', None)
@@ -48,7 +48,6 @@ class RoomConsumer(AsyncWebsocketConsumer):
     # handle message received from individual client
     async def receive(self, text_data):
         data = json.loads(text_data)
-        print(data)
         board = data['board']
         last_player = data['lastPlayer']
         player_x = data['playerX']
