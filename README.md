@@ -1,8 +1,7 @@
 # Online-Games
 Full stack web application allowing users to play online multiplayer games in real time.
 
-**TODO**
-*Insert GIF of usage here* 
+![online-games-demo](onine_games_demo_fast.gif)
 
 The project is currently hosted on AWS EC2. You can check it out [here](http://3.143.218.12:3000/login/).
 
@@ -100,6 +99,7 @@ These instructions will walk you through running this project on your local mach
 - Light/dark mode toggle
 - Real time game updates
 - Secure login
+- Multiple people can join a lobby to watch games
 - **TODO**
 
 ## Contributing
